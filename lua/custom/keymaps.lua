@@ -23,7 +23,7 @@ vim.keymap.set('n', '<Right>', ':vertical resize +2<CR>', opts)
 vim.keymap.set('n', '<Tab>', ':bnext<CR>', opts)
 vim.keymap.set('n', '<S-Tab>', ':bprevious<CR>', opts)
 vim.keymap.set('n', '<leader>x', ':bdelete<CR>', opts) -- close buffer
-vim.keymap.set('n', '<leader>b', '<cmd> enew <CR>', opts) -- new buffer
+-- vim.keymap.set('n', '<leader>b', '<cmd> enew <CR>', opts) -- new buffer
 
 -- Window management
 vim.keymap.set('n', '<leader>v', '<C-w>v', opts) -- split window vertically
@@ -52,3 +52,14 @@ vim.keymap.set('v', '>', '>gv', opts)
 
 -- Keep last yanked when pasting
 vim.keymap.set('v', 'p', '"_dP', opts)
+
+-- Commenting
+vim.keymap.set({ 'n' }, '<leader>c', 'gcc', { remap = true })
+vim.keymap.set('v', '<leader>c', function()
+  vim.cmd.norm 'gc'
+end)
+
+-- Auto formatting
+vim.keymap.set('n', '<leader>i', function()
+  vim.lsp.buf.execute_command { command = 'typescript.organizeImports', arguments = { vim.fn.expand '%:p' } }
+end, { desc = 'Organize imports', noremap = true, silent = true })
